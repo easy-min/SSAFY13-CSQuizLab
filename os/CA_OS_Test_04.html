@@ -311,10 +311,6 @@
                 return;
             }
 
-            let now = new Date();
-            let timeString = now.toLocaleTimeString();
-            document.getElementById("submissionTime").innerText = `제출 시간: ${timeString}`;
-
             let answers = {
                 "q1": 2, "q2": 4, "q3": 3, "q4": 3, "q5": 2,
                 "q6": 4, "q7": 4, "q8": 2, "q9": 1, "q10": 4,
@@ -346,7 +342,10 @@
                 "q20": "정답: ② 멀티스레딩의 주요 목적은 CPU 활용도를 높이고, 사용자 응답성을 개선하는 것입니다. 멀티스레딩을 사용하면 여러 작업을 병렬로 수행할 수 있으며, 대기 시간이 줄어듭니다."
             };
 
-
+            let now = new Date();
+            let timeString = now.toLocaleTimeString();
+            document.getElementById("submissionTime").innerText = `제출 시간: ${timeString}`;
+            
             let correctCount = 0;
             let incorrectExplanations = "";
             let explanationText = `<h3>${userName}님, 틀린 문제 해설</h3><ul>`;
