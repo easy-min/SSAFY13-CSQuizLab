@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>컴퓨터 구조와 운영체제 week2 01 </title>
+    <!-- Google Fonts 추가 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            /* 가독성 좋은 폰트 */
+            margin: 20px;
+            padding: 20px;
+        }
+
+        .question {
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .options {
+            margin-bottom: 10px;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 12px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        botton:hover {
+            background-color: #91a743;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            text-align: center;
+            padding: 12px;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
+        }
+
+        /*틀린 문제 해설*/
+        #explanation {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>컴퓨터구조와 운영체제 TEST 02 (25/03/06)</h1>
+    <form id="quizForm">
+        <!-- 이름 입력 필드 -->
+        <label for="userName"><b>이름 입력:</b></label>
+        <input type="text" id="userName" placeholder="이름을 입력하세요" required>
+        <br><br>
+        <div class="question">1. 하드 디스크의 구조와 관련된 문제</div>
+        <div class="options">
+            <label><input type="radio" name="q1" value="1"> ① 플래터</label><br>
+            <label><input type="radio" name="q1" value="2"> ② 스핀들</label><br>
+            <label><input type="radio" name="q1" value="3"> ③ 컨트롤러</label><br>
+            <label><input type="radio" name="q1" value="4"> ④ 디스크 암</label><br>
+        </div>
+
+        <div class="question">2. 데이터 접근 시간과 관련된 문제</div>
+        <div class="options">
+            <label><input type="radio" name="q2" value="1"> ① 탐색 시간</label><br>
+            <label><input type="radio" name="q2" value="2"> ② 회전 지연</label><br>
+            <label><input type="radio" name="q2" value="3"> ③ 전송 시간</label><br>
+            <label><input type="radio" name="q2" value="4"> ④ 캐시 크기</label><br>
+        </div>
+
+        <div class="question">3. 플래시 메모리의 종류와 성능 비교 문제</div>
+        <div class="options">
+            <label><input type="radio" name="q3" value="1"> ① SLC는 MLC보다 내구성이 뛰어나다.</label><br>
+            <label><input type="radio" name="q3" value="2"> ② MLC는 TLC보다 속도가 빠르다.</label><br>
+            <label><input type="radio" name="q3" value="3"> ③ TLC는 SLC보다 가격이 높다.</label><br>
+            <label><input type="radio" name="q3" value="4"> ④ SLC는 한 셀에 1비트를 저장한다.</label><br>
+        </div>
+
+        <div class="question">4. 하드 디스크와 SSD 비교 문제</div>
+        <div class="options">
+            <label><input type="radio" name="q4" value="1"> ① HDD는 SSD보다 속도가 빠르다.</label><br>
+            <label><input type="radio" name="q4" value="2"> ② SSD는 플래터를 이용하여 데이터를 저장한다.</label><br>
+            <label><input type="radio" name="q4" value="3"> ③ HDD는 기계적인 부품이 없어 충격에 강하다.</label><br>
+            <label><input type="radio" name="q4" value="4"> ④ SSD는 하드 디스크보다 데이터 접근 속도가 빠르다.</label><br>
+        </div>
+
+        <div class="question">5. 플래시 메모리의 페이지 및 블록 단위 문제</div>
+        <div class="options">
+            <label><input type="radio" name="q5" value="1"> ① 페이지 단위로 데이터를 삭제할 수 있다.</label><br>
+            <label><input type="radio" name="q5" value="2"> ② 블록 단위로만 데이터를 읽고 쓸 수 있다.</label><br>
+            <label><input type="radio" name="q5" value="3"> ③ 데이터를 기록할 때 페이지 단위를 사용한다.</label><br>
+            <label><input type="radio" name="q5" value="4"> ④ 데이터를 삭제할 때 페이지 단위를 사용한다.</label><br>
+        </div>
+
+        <div class="question">6. RAID 1에 대한 설명으로 옳은 것은 무엇인가요?</div>
+        <div class="options">
+            <label><input type="radio" name="q6" value="1"> ① RAID 1은 데이터를 병렬로 분산 저장하는 방식이다.</label><br>
+            <label><input type="radio" name="q6" value="2"> ② RAID 1은 데이터를 복제하여 저장하는 방식으로, 높은 데이터 안정성을 제공한다.</label><br>
+            <label><input type="radio" name="q6" value="3"> ③ RAID 1은 데이터를 패리티 정보와 함께 저장하여 오류 검출 및 복구가 가능하다.</label><br>
+            <label><input type="radio" name="q6" value="4"> ④ RAID 1은 최소 3개의 디스크가 필요하다.</label><br>
+        </div>
+
+        <div class="question">7. RAID 5와 RAID 6의 차이점에 대한 설명으로 옳지 않은 것은 무엇인가요?</div>
+        <div class="options">
+            <label><input type="radio" name="q7" value="1"> ① RAID 5는 하나의 패리티 데이터를 저장하지만, RAID 6은 두 개의 패리티 데이터를
+                저장한다.</label><br>
+            <label><input type="radio" name="q7" value="2"> ② RAID 5는 최소 3개의 디스크가 필요하지만, RAID 6은 최소 4개의 디스크가
+                필요하다.</label><br>
+            <label><input type="radio" name="q7" value="3"> ③ RAID 6은 RAID 5보다 데이터 보호 수준이 낮다.</label><br>
+            <label><input type="radio" name="q7" value="4"> ④ RAID 6은 RAID 5보다 디스크 장애 발생 시 데이터 복구 시간이 더 길 수
+                있다.</label><br>
+        </div>
+
+        <div class="question">8. RAID 0의 장점과 단점에 대한 설명 중 올바른 것은 무엇인가요?</div>
+        <div class="options">
+            <label><input type="radio" name="q8" value="1"> ① RAID 0은 데이터 분산 저장으로 성능이 향상되지만, 장애 발생 시 데이터 복구가
+                불가능하다.</label><br>
+            <label><input type="radio" name="q8" value="2"> ② RAID 0은 패리티 정보를 추가하여 데이터 무결성을 보장한다.</label><br>
+            <label><input type="radio" name="q8" value="3"> ③ RAID 0은 높은 안정성을 제공하지만, 성능이 낮아지는 단점이 있다.</label><br>
+            <label><input type="radio" name="q8" value="4"> ④ RAID 0은 데이터가 단일 디스크에 저장되므로, 병렬 처리가 불가능하다.</label><br>
+        </div>
+
+        <div class="question">9. 장치 컨트롤러와 관련된 설명 중 올바른 것은 무엇인가요?</div>
+        <div class="options">
+            <label><input type="radio" name="q9" value="1"> ① 장치 컨트롤러는 CPU가 직접 입출력 장치를 제어하는 역할을 한다.</label><br>
+            <label><input type="radio" name="q9" value="2"> ② 장치 컨트롤러는 입출력 장치와 CPU 사이에서 데이터를 주고받는 역할을 한다.</label><br>
+            <label><input type="radio" name="q9" value="3"> ③ 장치 컨트롤러는 운영체제 없이도 독립적으로 동작할 수 있다.</label><br>
+            <label><input type="radio" name="q9" value="4"> ④ 장치 컨트롤러는 입력 장치만을 제어하며, 출력 장치는 제어하지 않는다.</label><br>
+        </div>
+
+        <div class="question">10. 장치 드라이버의 역할과 관련된 설명 중 옳지 않은 것은 무엇인가요?</div>
+        <div class="options">
+            <label><input type="radio" name="q10" value="1"> ① 장치 드라이버는 운영체제가 하드웨어를 올바르게 인식하고 사용할 수 있도록 돕는다.</label><br>
+            <label><input type="radio" name="q10" value="2"> ② 장치 드라이버는 특정 운영체제에 종속되지 않으며, 모든 운영체제에서 동일하게
+                동작한다.</label><br>
+            <label><input type="radio" name="q10" value="3"> ③ 운영체제는 새로운 장치를 사용할 때 해당 장치에 맞는 드라이버를 설치해야 한다.</label><br>
+            <label><input type="radio" name="q10" value="4"> ④ 장치 드라이버가 없으면 특정 하드웨어 장치를 정상적으로 사용할 수 없는 경우가
+                많다.</label><br>
+        </div>
+
+        <div class="question">11. 컴퓨터에서 입출력 장치와 CPU 간 데이터 전송 방식에 대한 설명 중 옳은 것은 무엇인가요?</div>
+        <div class="options">
+            <label><input type="radio" name="q11" value="1"> ① 입출력 장치와 CPU 간 데이터 전송은 항상 직접 메모리 접근(DMA)을 사용해야
+                한다.</label><br>
+            <label><input type="radio" name="q11" value="2"> ② 입출력 장치와 CPU 간 데이터 전송은 인터럽트 방식, DMA 방식 등 다양한 방법이
+                있다.</label><br>
+            <label><input type="radio" name="q11" value="3"> ③ 모든 입출력 장치는 CPU의 직접적인 개입 없이 독립적으로 동작한다.</label><br>
+            <label><input type="radio" name="q11" value="4"> ④ CPU는 입출력 장치와의 데이터 전송을 위해 항상 명령어를 직접 실행해야 한다.</label><br>
+        </div>
+
+        <div class="question">12. 장치 드라이버와 장치 컨트롤러의 관계에 대한 설명 중 올바른 것은 무엇인가요?</div>
+        <div class="options">
+            <label><input type="radio" name="q12" value="1"> ① 장치 컨트롤러는 소프트웨어이며, 장치 드라이버는 하드웨어이다.</label><br>
+            <label><input type="radio" name="q12" value="2"> ② 장치 드라이버는 운영체제와 장치 컨트롤러 사이에서 통신을 담당하는 소프트웨어이다.</label><br>
+            <label><input type="radio" name="q12" value="3"> ③ 장치 드라이버가 없어도 장치 컨트롤러만으로 입출력 장치를 제어할 수 있다.</label><br>
+            <label><input type="radio" name="q12" value="4"> ④ 장치 컨트롤러는 운영체제 없이 독립적으로 장치를 관리하고 제어할 수 있다.</label><br>
+        </div>
+
+        <div class="question">13. 인터럽트의 우선순위 처리 방식과 관련하여 옳은 것은 무엇인가요?</div>
+        <div class="options">
+            <label><input type="radio" name="q13" value="1"> ① 모든 인터럽트는 동시에 처리되므로, 우선순위 개념이 적용되지 않는다.</label><br>
+            <label><input type="radio" name="q13" value="2"> ② 높은 우선순위를 가진 인터럽트가 발생하면, 낮은 우선순위의 인터럽트 처리를 중단하고 즉시
+                실행된다.</label><br>
+            <label><input type="radio" name="q13" value="3"> ③ 인터럽트는 FIFO(First In, First Out) 방식으로 처리되어 발생한 순서대로
+                실행된다.</label><br>
+            <label><input type="radio" name="q13" value="4"> ④ 인터럽트 우선순위는 운영체제가 아닌 하드웨어에서만 결정된다.</label><br>
+        </div>
+
+        <div class="question">14. DMA(Direct Memory Access)와 관련된 설명 중 올바른 것은 무엇인가요?</div>
+        <div class="options">
+            <label><input type="radio" name="q14" value="1"> ① DMA는 CPU를 거치지 않고 메모리와 입출력 장치 간에 직접 데이터 전송을 수행하는
+                방식이다.</label><br>
+            <label><input type="radio" name="q14" value="2"> ② DMA는 CPU가 직접 모든 데이터 전송을 처리해야 하는 방식으로 성능이
+                낮아진다.</label><br>
+            <label><input type="radio" name="q14" value="3"> ③ DMA는 시스템 버스를 사용할 수 없고, 별도의 버스를 사용해야 한다.</label><br>
+            <label><input type="radio" name="q14" value="4"> ④ DMA 방식에서는 CPU가 모든 데이터 전송 과정을 제어해야 한다.</label><br>
+        </div>
+
+        <div class="question">15. 다음 중 메모리 맵 입출력 방식의 특징으로 올바른 것은 무엇인가요?</div>
+        <div class="options">
+            <label><input type="radio" name="q15" value="1"> ① 별도의 입출력 명령어가 필요하며, 메모리 주소와 입출력 주소를 분리하여 관리한다.</label><br>
+            <label><input type="radio" name="q15" value="2"> ② 입출력 장치가 메모리 주소 공간을 공유하여 동일한 명령어로 접근할 수 있다.</label><br>
+            <label><input type="radio" name="q15" value="3"> ③ 입출력 장치는 항상 CPU를 거쳐서만 데이터를 주고받는다.</label><br>
+            <label><input type="radio" name="q15" value="4"> ④ 메모리 맵 입출력에서는 입출력 명령어를 통해서만 입출력 장치를 제어할 수 있다.</label><br>
+        </div>
+
+        <div class="question">16. CPU와 입출력 장치 간의 데이터 전송 방식에 대한 설명 중 옳지 않은 것은 무엇인가요?</div>
+        <div class="options">
+            <label><input type="radio" name="q16" value="1"> ① 프로그램된 입출력은 CPU가 직접 입출력 장치를 제어하는 방식이다.</label><br>
+            <label><input type="radio" name="q16" value="2"> ② 인터럽트 기반 입출력 방식은 입출력 장치가 CPU에 인터럽트를 발생시켜 데이터 전송을 요청하는
+                방식이다.</label><br>
+            <label><input type="radio" name="q16" value="3"> ③ DMA 방식에서는 CPU가 직접 모든 데이터 전송을 수행한다.</label><br>
+            <label><input type="radio" name="q16" value="4"> ④ CPU는 입출력 장치와의 데이터 전송을 위해 다양한 방식을 사용할 수 있다.</label><br>
+        </div>
+
+        <div class="question">17. 입출력 버스의 역할에 대한 설명 중 올바른 것은 무엇인가요?</div>
+        <div class="options">
+            <label><input type="radio" name="q17" value="1"> ① 입출력 버스는 입출력 장치와 CPU 사이에서 데이터를 전송하는 경로 역할을 한다.</label><br>
+            <label><input type="radio" name="q17" value="2"> ② 입출력 버스는 오직 하나의 장치만 연결할 수 있으며, 다중 장치 연결이
+                불가능하다.</label><br>
+            <label><input type="radio" name="q17" value="3"> ③ 입출력 버스는 CPU 없이 독립적으로 데이터를 처리할 수 있다.</label><br>
+            <label><input type="radio" name="q17" value="4"> ④ 입출력 버스는 메모리와는 연결되지 않고, 오직 입출력 장치만 연결된다.</label><br>
+        </div>
+
+        <div class="question">18. DMA 컨트롤러의 역할에 대한 설명 중 올바른 것은 무엇인가요?</div>
+        <div class="options">
+            <label><input type="radio" name="q18" value="1"> ① DMA 컨트롤러는 CPU의 개입 없이 메모리와 입출력 장치 간 데이터를 직접 전송할 수 있도록
+                한다.</label><br>
+            <label><input type="radio" name="q18" value="2"> ② DMA 컨트롤러는 오직 CPU를 통해서만 데이터를 전송할 수 있다.</label><br>
+            <label><input type="radio" name="q18" value="3"> ③ DMA 컨트롤러는 인터럽트를 사용할 수 없으며, 별도의 신호를 통해 CPU와
+                통신한다.</label><br>
+            <label><input type="radio" name="q18" value="4"> ④ DMA 컨트롤러는 입출력 장치와 직접 연결되지 않으며, 메모리와만 통신한다.</label><br>
+        </div>
+
+        <div class="question">19. 인터럽트 기반 입출력 방식의 장점으로 올바른 것은 무엇인가요?</div>
+        <div class="options">
+            <label><input type="radio" name="q19" value="1"> ① CPU가 모든 입출력 작업을 직접 수행해야 하므로 부하가 증가한다.</label><br>
+            <label><input type="radio" name="q19" value="2"> ② 입출력 장치가 데이터 전송이 필요할 때만 CPU에 요청하므로, CPU의 효율성이
+                증가한다.</label><br>
+            <label><input type="radio" name="q19" value="3"> ③ 인터럽트 기반 입출력 방식에서는 CPU가 입출력 작업을 수행하지 않는다.</label><br>
+            <label><input type="radio" name="q19" value="4"> ④ 인터럽트 방식은 DMA보다 항상 빠르게 동작한다.</label><br>
+        </div>
+
+        <div class="question">20. 고립형 입출력 방식과 메모리 맵 입출력 방식의 차이점으로 올바른 것은 무엇인가요?</div>
+        <div class="options">
+            <label><input type="radio" name="q20" value="1"> ① 고립형 입출력은 메모리와 입출력 장치가 같은 주소 공간을 공유하는 방식이다.</label><br>
+            <label><input type="radio" name="q20" value="2"> ② 메모리 맵 입출력 방식에서는 별도의 입출력 명령어가 필요하다.</label><br>
+            <label><input type="radio" name="q20" value="3"> ③ 고립형 입출력 방식에서는 입출력 장치를 제어하기 위해 별도의 입출력 주소 공간을
+                사용한다.</label><br>
+            <label><input type="radio" name="q20" value="4"> ④ 메모리 맵 입출력 방식에서는 입출력 장치와 메모리를 완전히 분리하여 관리한다.</label><br>
+        </div>
+
+
+        <button type="button" id="submitButton" onclick="checkAnswers()">
+            제출하기
+        </button>
+        <div id="submissionTime" style="margin-top: 10px"></div>
+    </form>
+
+    <div id="result"></div>
+    <div id="score"></div>
+    <div id="explanation"></div>
+
+    <!-- 해설 다운로드 버튼 -->
+    <button type="button" id="downloadExplanation" style="display: none;" onclick="downloadExplanation()">해설
+        다운로드</button>
+
+        <script>
+            function checkAnswers() {
+                let submitButton = document.getElementById("submitButton");
+                if (submitButton.disabled) return;
+                submitButton.disabled = true;
+                submitButton.style.cursor = "not-allowed";
+        
+                let userName = document.getElementById("userName").value.trim();
+                if (userName === "") {
+                    alert("이름을 입력하세요!");
+                    submitButton.disabled = false;
+                    submitButton.style.cursor = "pointer";
+                    return;
+                }
+        
+                let now = new Date();
+                let timeString = now.toLocaleTimeString();
+                document.getElementById("submissionTime").innerText = `제출 시간: ${timeString}`;
+        
+                let answers = {
+                    "q1": 3, "q2": 4, "q3": 3, "q4": 4, "q5": 3,
+                    "q6": 2, "q7": 3, "q8": 1, "q9": 2, "q10": 2,
+                    "q11": 2, "q12": 2, "q13": 2, "q14": 1, "q15": 2,
+                    "q16": 3, "q17": 1, "q18": 1, "q19": 2, "q20": 3
+                };
+        
+                let explanations = {
+                    "q1": "정답: ③ 컨트롤러 → 하드 디스크는 플래터, 스핀들, 디스크 암, 헤드 등으로 구성됩니다.",
+                    "q2": "정답: ④ 캐시 크기 → 데이터 접근 시간은 탐색 시간, 회전 지연, 전송 시간으로 구성됩니다.",
+                    "q3": "정답: ③ TLC는 SLC보다 가격이 높다 → TLC는 SLC보다 가격이 저렴합니다.",
+                    "q4": "정답: ④ SSD는 하드 디스크보다 데이터 접근 속도가 빠르다.",
+                    "q5": "정답: ③ 데이터를 기록할 때 페이지 단위를 사용한다.",
+                    "q6": "정답: ② RAID 1은 데이터를 복제하여 저장하는 방식으로, 높은 안정성을 제공합니다.",
+                    "q7": "정답: ③ RAID 6은 RAID 5보다 데이터 보호 수준이 낮다.",
+                    "q8": "정답: ① RAID 0은 성능이 좋지만, 데이터 복구가 불가능합니다.",
+                    "q9": "정답: ② 장치 컨트롤러는 입출력 장치와 CPU 사이에서 데이터를 주고받습니다.",
+                    "q10": "정답: ② 장치 드라이버는 특정 운영체제에 종속됩니다.",
+                    "q11": "정답: ② 입출력 장치와 CPU 간 데이터 전송 방식은 인터럽트, DMA 등이 있습니다.",
+                    "q12": "정답: ② 장치 드라이버는 운영체제와 장치 컨트롤러 사이에서 통신을 담당합니다.",
+                    "q13": "정답: ② 높은 우선순위 인터럽트는 즉시 실행됩니다.",
+                    "q14": "정답: ① DMA는 CPU 없이 메모리와 입출력 장치 간 데이터 전송을 수행합니다.",
+                    "q15": "정답: ② 메모리 맵 입출력 방식에서는 입출력 장치가 메모리 주소를 공유합니다.",
+                    "q16": "정답: ③ DMA 방식에서는 CPU가 모든 데이터 전송을 직접 수행하지 않습니다.",
+                    "q17": "정답: ① 입출력 버스는 입출력 장치와 CPU 사이에서 데이터를 전송합니다.",
+                    "q18": "정답: ① DMA 컨트롤러는 CPU 개입 없이 데이터를 직접 전송할 수 있습니다.",
+                    "q19": "정답: ② 인터럽트 기반 입출력 방식은 CPU의 효율성을 높입니다.",
+                    "q20": "정답: ③ 고립형 입출력 방식은 별도의 입출력 주소 공간을 사용합니다."
+                };
+        
+                let correctCount = 0;
+                let incorrectExplanations = "";
+                let explanationText = `<h3>${userName}님, 틀린 문제 해설</h3><ul>`;
+        
+                let resultTable = `<table>
+                    <tr>
+                        <th>문제 번호</th>
+                        <th>제출한 답</th>
+                        <th>정답</th>
+                    </tr>`;
+        
+                for (let key in answers) {
+                    let userAnswer = document.querySelector(`input[name="${key}"]:checked`);
+                    let userAnswerValue = userAnswer ? userAnswer.value : "미선택";
+                    let rowClass = userAnswerValue === String(answers[key]) ? "correct" : "incorrect";
+        
+                    resultTable += `<tr class="${rowClass}">
+                        <td>${key.replace("q", "")}</td>
+                        <td>${userAnswerValue}</td>
+                        <td>${answers[key]}</td>
+                    </tr>`;
+        
+                    if (userAnswerValue === String(answers[key])) {
+                        correctCount++;
+                    } else {
+                        explanationText += `<li>${explanations[key]}</li>`;
+                        incorrectExplanations += `문제 ${key.replace("q", "")}: ${explanations[key]}\n\n`;
+                    }
+                }
+        
+                resultTable += `</table>`;
+        
+                document.getElementById("result").innerHTML = resultTable;
+                document.getElementById("score").innerHTML = `<h2>${userName}님, 당신의 점수는 ${correctCount} / 20입니다.</h2>`;
+        
+                explanationText += "</ul>";
+                document.getElementById("explanation").innerHTML = incorrectExplanations ? explanationText : "<h3>모든 문제를 맞췄습니다! 🎉</h3>";
+        
+                // 해설 다운로드 버튼 표시
+                if (incorrectExplanations.trim() !== "") {
+                    document.getElementById("downloadExplanation").style.display = "block";
+                    document.getElementById("downloadExplanation").setAttribute("data-explanation", incorrectExplanations);
+                }
+            }
+        
+            function downloadExplanation() {
+                let explanationContent = document.getElementById("downloadExplanation").getAttribute("data-explanation");
+                let blob = new Blob([explanationContent], { type: "text/plain" });
+                let link = document.createElement("a");
+                link.href = URL.createObjectURL(blob);
+                link.download = "틀린 문제 해설.txt";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        </script>
+        
+
+</body>
+
+</html>
