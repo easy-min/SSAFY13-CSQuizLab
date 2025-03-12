@@ -342,9 +342,6 @@
                 "q20": "정답: ② 멀티스레딩의 주요 목적은 CPU 활용도를 높이고, 사용자 응답성을 개선하는 것입니다. 멀티스레딩을 사용하면 여러 작업을 병렬로 수행할 수 있으며, 대기 시간이 줄어듭니다."
             };
 
-            let now = new Date();
-            let timeString = now.toLocaleTimeString();
-            document.getElementById("submissionTime").innerText = `제출 시간: ${timeString}`;
             
             let correctCount = 0;
             let incorrectExplanations = "";
@@ -377,6 +374,10 @@
             }
 
             resultTable += `</table>`;
+
+            let now = new Date();
+            let timeString = now.toLocaleTimeString();
+            document.getElementById("submissionTime").innerText = `제출 시간: ${timeString}`;
 
             document.getElementById("result").innerHTML = resultTable;
             document.getElementById("score").innerHTML = `<h2>${userName}님, 당신의 점수는 ${correctCount} / 20입니다.</h2>`;
