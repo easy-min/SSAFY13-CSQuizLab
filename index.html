@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>CS Study Quiz Lab</title>
+  <style>
+    /* 전체 화면 기본 설정 */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #fafafa; /* 연한 회색 배경 */
+    }
+
+    /* 상단 메뉴(탭) 스타일 */
+    .navbar {
+      background-color: #f5f5f5; /* 옅은 회색 */
+      border-bottom: 1px solid #ddd;
+      padding: 10px 20px;
+    }
+    .navbar a {
+      margin-right: 15px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+      font-size: 0.95rem;
+    }
+    .navbar a:hover {
+      text-decoration: underline;
+    }
+
+    /* 메인 컨테이너 */
+    .container {
+      max-width: 1000px;
+      margin: 20px auto;
+      background-color: #fff; /* 흰색 배경 */
+      border: 1px solid #ddd;
+      padding: 20px;
+    }
+
+    h2 {
+      margin-bottom: 15px;
+      color: #333;
+      font-size: 1.2rem;
+    }
+
+    /* 테이블 스타일 */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 0.75rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #333;
+      vertical-align: top;
+    }
+    th {
+      background-color: #f2f2f2; /* 테이블 헤더를 살짝 구분되는 회색 */
+      font-weight: bold;
+    }
+    tr:hover {
+      background-color: #fafafa; /* 행에 마우스 오버 시 살짝 강조 */
+    }
+
+    /* "문제 풀러가기" 버튼 스타일 */
+    .btn {
+      display: inline-block;
+      background-color: #007ac7;
+      color: #fff;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .btn:hover {
+      background-color: #005999;
+    }
+
+    /* 단원 칼럼(4번째 열)만 왼쪽 정렬 */
+    /* (th도 왼쪽 정렬하고 싶다면 아래 주석 해제) */
+    th:nth-child(4), td:nth-child(4) {
+      text-align: left;
+    }
+
+    /* 일반 링크 스타일 (버튼 외) */
+    a {
+      color: #0066cc;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <!-- 상단 메뉴(탭) 영역 -->
+  <div class="navbar">
+    <a href="#">임시</a>
+    <a href="#">code.plus</a>
+    <a href="#">시리즈</a>
+    <a href="#">공개</a>
+  </div>
+
+  <!-- 메인 컨테이너 -->
+  <div class="container">
+    <h2>Test Overview</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Test 이름</th>
+          <th>문제 풀러가기</th>
+          <th>주제</th>
+          <th>단원</th>
+          <th>문제 유형</th>
+          <th>주요 키워드</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 예시 1 -->
+        <tr>
+          <td>week1 test01</td>
+          <td>
+            <!-- 깃허브 경로 앞에 OS/ 추가 -->
+            <a href="https://github.com/SSAFY13-CSQuizLab/OS/CA_OS_Test_01.html" target="_blank" class="btn">
+              문제풀러가기
+            </a>
+          </td>
+          <td>컴퓨터의 구조</td>
+          <td>(1장) 컴퓨터 구조 시작하기<br>(2장) 데이터<br>(3장) 명령어</td>
+          <td>객관식</td>
+          <td>컴퓨터 구조, 데이터, 명령어</td>
+        </tr>
+        <!-- 예시 2 -->
+        <tr>
+          <td>week1 test02</td>
+          <td>
+            <a href="https://github.com/SSAFY13-CSQuizLab/OS/CA_OS_Test_02.html" target="_blank" class="btn">
+              문제풀러가기
+            </a>
+          </td>
+          <td>CPU와 메모리</td>
+          <td>(4장) CPU의 작동 원리<br>(5장) CPU 성능 향상 기법<br>(6장) 메모리 & 캐시</td>
+          <td>객관식</td>
+          <td>CPU 작동, 성능 향상, 캐시</td>
+        </tr>
+        <!-- 예시 3 -->
+        <tr>
+          <td>week2 test01</td>
+          <td>
+            <a href="https://github.com/SSAFY13-CSQuizLab/OS/CA_OS_Test_03.html" target="_blank" class="btn">
+              문제풀러가기
+            </a>
+          </td>
+          <td>보조기억장치와 입출력장치</td>
+          <td>(7장) 보조기억 장치<br>(8장) 입출력 장치</td>
+          <td>객관식</td>
+          <td>HDD/SSD, I/O 장치</td>
+        </tr>
+        <!-- 예시 4 -->
+        <tr>
+          <td>week2 test02</td>
+          <td>
+            <a href="https://github.com/SSAFY13-CSQuizLab/OS/CA_OS_Test_04.html" target="_blank" class="btn">
+              문제풀러가기
+            </a>
+          </td>
+          <td>프로세스와 스레드 그리고 CPU 스케줄링</td>
+          <td>(9장) 운영체제 시작하기<br>(10장) 프로세스 & 스레드<br>(11장) CPU 스케줄링</td>
+          <td>객관식</td>
+          <td>OS 기초, 프로세스, 스레드, 스케줄링</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
