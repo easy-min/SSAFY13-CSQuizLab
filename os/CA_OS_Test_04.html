@@ -377,11 +377,10 @@
 
 
             document.getElementById("result").innerHTML = resultTable;
-            document.getElementById("score").innerHTML = `<h2>${userName}님, 당신의 점수는 ${correctCount} / 20입니다.</h2>`;
-
             let now = new Date();
             let timeString = now.toLocaleTimeString();
-            document.getElementById("submissionTime").innerHTML = `<h3>제출 시간: ${timeString}</h3>`;
+            document.getElementById("score").innerHTML = `<h3>제출 시간: ${timeString}</h3><h2>${userName}님, 당신의 점수는 ${correctCount} / 20입니다.</h2>`;
+
 
 
             explanationText += "</ul>";
