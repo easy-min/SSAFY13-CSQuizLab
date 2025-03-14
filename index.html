@@ -124,12 +124,28 @@
       background-color: #0052cc;
     }
 
+    .release-link {
+    display: inline-block;
+    background-color: #0064ff; /* 기본 배경색 */
+    color: #fff; /* 텍스트 색상 */
+    padding: 10px 20px; /* 여백 */
+    border-radius: 5px; /* 둥근 테두리 */
+    text-decoration: none; /* 밑줄 제거 */
+    font-weight: bold;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .release-link:hover {
+    background-color: #0052cc; /* hover 시 배경색 */
+    transform: scale(1.05); /* 살짝 확대 효과 */
+  }
+
   </style>
 </head>
 <body>
   <!-- 상단 메뉴(탭) 영역 -->
   <div class="navbar">
-    <a href="#">임시</a>
+    <a href="releaseNote.html" class="release-link">개발노트</a>
     <a href="#">code.plus</a>
     <a href="#">시리즈</a>
     <a href="#">공개</a>
