@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>CS Web Development Release Notes</title>
+  <style>
+    /* 전역 스타일 초기화 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Noto Sans KR", sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+    }
+    /* 메인 컨테이너 */
+    .release-notes-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 30px;
+    }
+    /* 큰 제목 */
+    .release-notes-container h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #212529;
+    }
+    /* 타임라인 래퍼 */
+    .timeline {
+      position: relative;
+      margin: 20px 0;
+      padding-left: 30px; /* 타임라인 선과 여백을 위해 */
+    }
+    /* 수직선 (타임라인) */
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 15px;
+      top: 0;
+      width: 2px;
+      height: 100%;
+      background-color: #dee2e6;
+    }
+    /* 버전별 섹션(아이템) */
+    .timeline-item {
+      position: relative;
+      margin-bottom: 30px;
+      padding-left: 20px;
+    }
+    /* 동그라미 포인트 */
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -9px;
+      top: 5px;
+      width: 14px;
+      height: 14px;
+      background-color: #0064ff;
+      border-radius: 50%;
+    }
+    /* 버전 제목 */
+    .timeline-item h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: #0064ff;
+    }
+    /* 날짜 */
+    .timeline-item .date {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 10px;
+    }
+    /* 변경사항 목록 */
+    .timeline-item ul {
+      list-style: disc;
+      margin-left: 1.2rem;
+    }
+    .timeline-item li {
+      margin-bottom: 5px;
+    }
+    /* 반응형 (모바일) */
+    @media (max-width: 600px) {
+      .release-notes-container {
+        padding: 20px;
+      }
+      .timeline {
+        padding-left: 20px;
+      }
+      .timeline::before {
+        left: 10px;
+      }
+      .timeline-item {
+        padding-left: 15px;
+      }
+      .timeline-item::before {
+        left: -11px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="release-notes-container">
+    <h1>CS Web Development Release Notes</h1>
+    <div class="timeline">
+      
+      <!-- 1주차 업데이트 -->
+      <div class="timeline-item">
+        <h2>1주차</h2>
+        <div class="date">2025-03-06</div>
+        <ul>
+          <li>초기에는 단순 Word 파일로 문제 제공</li>
+          <li>이후 HTML 파일 형태로 전환하여 웹 브라우저에서 확인 가능</li>
+        </ul>
+      </div>
+      
+      <!-- 2주차 업데이트 -->
+      <div class="timeline-item">
+        <h2>2주차</h2>
+        <div class="date">2025-03-12</div>
+        <ul>
+          <li>Netlify와 같은 정적 웹호스팅 서비스를 활용해 웹페이지 배포</li>
+          <li>문제 풀이 시간 체크 기능 추가</li>
+          <li>자동 채점 기능 도입</li>
+        </ul>
+      </div>
+      
+      <!-- 3주차 업데이트 -->
+      <div class="timeline-item">
+        <h2>3주차</h2>
+        <div class="date">2025-03-18</div>
+        <ul>
+          <li>틀린 문제에 대한 해설을 .md 파일 형식으로 다운로드할 수 있도록 구현</li>
+          <li>전체 UI를 보다 깔끔하게 리뉴얼</li>
+        </ul>
+      </div>
+      
+      <!-- 앞으로의 업데이트 기록도 추가 가능 -->
+      
+    </div>
+  </div>
+</body>
+</html>
