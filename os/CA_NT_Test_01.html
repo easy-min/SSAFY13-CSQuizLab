@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>네트워크 개념 퀴즈 (20문제)</title>
+        <!-- Bootstrap CSS -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <!-- 구글 폰트 (Noto Sans KR) -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            body {
+                font-family: "Noto Sans KR", sans-serif;
+                background-color: #f8f9fa;
+            }
+            .card {
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+            .quiz-header {
+                font-weight: 700;
+                color: #212529;
+            }
+            .correct {
+                color: #28a745;
+            }
+            .incorrect {
+                color: #dc3545;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container my-5">
+            <!-- 퀴즈 카드 -->
+            <div class="card mx-auto" style="max-width: 800px">
+                <div class="card-body">
+                    <h1 class="card-title quiz-header mb-4">
+                        네트워크 개념 퀴즈 (20문제)
+                    </h1>
+
+                    <!-- 이름 입력 -->
+                    <div class="mb-3">
+                        <label for="userName" class="form-label fw-semibold"
+                            >이름 입력:</label
+                        >
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="userName"
+                            placeholder="이름을 입력하세요"
+                            required
+                        />
+                    </div>
+
+                    <!-- 문제 영역 -->
+                    <form id="quizForm">
+                        <div id="quizQuestions"></div>
+                        <button
+                            type="button"
+                            class="btn btn-success mt-3"
+                            id="submitButton"
+                            onclick="checkAnswers()"
+                        >
+                            제출하기
+                        </button>
+                    </form>
+
+                    <!-- 결과 영역 -->
+                    <div id="result" class="mt-4"></div>
+                    <div id="submissionTime"></div>
+                    <div id="score" class="mt-2"></div>
+                    <div id="explanation" class="mt-4"></div>
+                    <button
+                        type="button"
+                        class="btn btn-secondary mt-2"
+                        id="downloadExplanation"
+                        style="display: none"
+                        onclick="downloadExplanation()"
+                    >
+                        해설 다운로드
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap Bundle JS (Popper 포함) -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script>
+            // 네트워크 개념 퀴즈 총 20문제 (이전 6문제 + 추가 14문제)
+            const quizData = [
+                // [1 ~ 6] 이전에 생성한 6문제
+                {
+                    question:
+                        "1. 다음 중 네트워크 구조를 이루는 기본 요소가 아닌 것은 무엇인가?",
+                    options: [
+                        "① 호스트(Host)",
+                        "② 네트워크 장비",
+                        "③ 통신 매체",
+                        "④ 데이터베이스 스키마",
+                    ],
+                    answer: "4",
+                    explanation:
+                        "네트워크 구조는 호스트, 네트워크 장비, 통신 매체, 프로토콜 등으로 구성되며, 데이터베이스 스키마는 해당되지 않습니다.",
+                },
+                {
+                    question:
+                        "2. LAN과 WAN에 대한 설명으로 옳지 않은 것을 고르시오.",
+                    options: [
+                        "① LAN은 근거리 네트워크로, 일반적으로 사무실·건물·캠퍼스 내를 연결한다.",
+                        "② WAN은 LAN보다 더 넓은 지역을 연결하는 광역 네트워크이다.",
+                        "③ LAN과 WAN은 동일 범주의 네트워크이므로 구분 없이 혼용해 사용된다.",
+                        "④ WAN은 국가·대륙 간 등 매우 광범위한 거리를 연결할 수 있다.",
+                    ],
+                    answer: "3",
+                    explanation:
+                        "LAN은 비교적 작은 지역, WAN은 더 넓은 지역을 연결하므로 ‘동일 범주’라는 설명은 옳지 않습니다.",
+                },
+                {
+                    question:
+                        "3. 프로토콜(Protocol)에 대한 설명 중 옳은 것을 고르시오.",
+                    options: [
+                        "① 프로토콜은 네트워크 계층을 위한 하드웨어 장치이다.",
+                        "② 프로토콜은 노드 간 약속된 규칙이나 방식을 의미한다.",
+                        "③ 프로토콜은 네트워크의 물리 속도만 제한한다.",
+                        "④ 프로토콜은 애플리케이션 계층에서만 사용된다.",
+                    ],
+                    answer: "2",
+                    explanation:
+                        "프로토콜은 노드 간 약속된 규칙과 방법으로, 데이터 통신의 형식과 절차 등을 정의합니다.",
+                },
+                {
+                    question:
+                        "4. OSI 7계층 모델에 대한 설명으로 옳지 않은 것을 고르시오.",
+                    options: [
+                        "① OSI 7계층은 네트워크 기능을 7단계로 구분해 설명한다.",
+                        "② 각 계층은 고유의 기능을 수행하며 상·하위 계층과 인터페이스한다.",
+                        "③ OSI 모델은 TCP/IP 모델에 비해 더 간단하고 실제 구현 예시가 더 많다.",
+                        "④ OSI 모델은 프로토콜을 구조화하고 표준화하기 위한 참조 모델이다.",
+                    ],
+                    answer: "3",
+                    explanation:
+                        "실제 구현 예시는 TCP/IP 모델이 훨씬 많으며, OSI 모델은 이론적 참조 모델로 활용됩니다.",
+                },
+                {
+                    question:
+                        "5. TCP/IP 프로토콜 모델에 대한 설명으로 옳은 것을 고르시오.",
+                    options: [
+                        "① TCP/IP 모델은 OSI 7계층과 완전히 동일한 구조이다.",
+                        "② TCP/IP 모델은 4계층 구조로 인터넷 계층 등을 포함한다.",
+                        "③ TCP/IP 모델은 물리 계층과 데이터링크 계층만 정의한다.",
+                        "④ TCP/IP 모델은 OSI 모델보다 먼저 제안된 순수 이론 모델이다.",
+                    ],
+                    answer: "2",
+                    explanation:
+                        "TCP/IP 모델은 일반적으로 4계층(응용, 전송, 인터넷, 네트워크 액세스)으로 구분됩니다.",
+                },
+                {
+                    question:
+                        "6. PDU(Protocol Data Unit)에 대한 설명으로 옳은 것을 고르시오.",
+                    options: [
+                        "① PDU는 프로세스 간 통신을 위한 하드웨어 인터럽트이다.",
+                        "② PDU는 회선 교환 방식에서 사용하는 고정 크기 블록을 의미한다.",
+                        "③ PDU는 각 계층에서 전송되는 데이터 단위를 의미한다.",
+                        "④ PDU는 데이터베이스 트랜잭션을 주고받는 묶음을 의미한다.",
+                    ],
+                    answer: "3",
+                    explanation:
+                        "PDU는 각 계층에서 전송되는 데이터 단위로, 예를 들어 TCP 계층에서는 세그먼트, IP 계층에서는 패킷을 의미합니다.",
+                },
+                // [7 ~ 20] 추가로 생성한 14문제
+                {
+                    question:
+                        "7. IPv4 주소는 32비트로 구성되며, 클래스 A 주소의 기본 범위는 어느 것인가?",
+                    options: [
+                        "① 1.0.0.0 ~ 126.255.255.255",
+                        "② 128.0.0.0 ~ 191.255.255.255",
+                        "③ 192.0.0.0 ~ 223.255.255.255",
+                        "④ 224.0.0.0 ~ 239.255.255.255",
+                    ],
+                    answer: "1",
+                    explanation:
+                        "IPv4 클래스 A 주소는 1.0.0.0부터 126.255.255.255까지의 범위를 갖습니다.",
+                },
+                {
+                    question:
+                        "8. 기본 서브넷 마스크가 255.255.0.0인 IP 주소 클래스는 무엇인가?",
+                    options: [
+                        "① 클래스 A",
+                        "② 클래스 B",
+                        "③ 클래스 C",
+                        "④ 클래스 D",
+                    ],
+                    answer: "2",
+                    explanation:
+                        "서브넷 마스크 255.255.0.0은 클래스 B 주소의 기본 서브넷 마스크입니다.",
+                },
+                {
+                    question:
+                        "9. NAT(Network Address Translation)에 대한 설명으로 옳은 것은?",
+                    options: [
+                        "① NAT는 네트워크 연결을 위해 프로토콜 변환만 수행한다.",
+                        "② NAT는 사설 IP 주소를 공인 IP 주소로 변환한다.",
+                        "③ NAT는 데이터를 암호화하여 전송한다.",
+                        "④ NAT는 무조건 포트 번호를 변경한다.",
+                    ],
+                    answer: "2",
+                    explanation:
+                        "NAT는 내부의 사설 IP 주소를 외부에 공인 IP로 변환하여 인터넷 접속을 가능하게 합니다.",
+                },
+                {
+                    question: "10. DNS(Domain Name System)의 역할로 옳은 것은?",
+                    options: [
+                        "① 도메인 이름을 IP 주소로 변환한다.",
+                        "② IP 주소를 도메인 이름으로 변환한다.",
+                        "③ 데이터를 암호화하여 전송한다.",
+                        "④ 서버의 물리적 위치를 표시한다.",
+                    ],
+                    answer: "1",
+                    explanation:
+                        "DNS는 사람이 기억하기 쉬운 도메인 이름을 실제 통신에 필요한 IP 주소로 변환하는 역할을 합니다.",
+                },
+                {
+                    question: "11. HTTP와 HTTPS의 주요 차이점은 무엇인가?",
+                    options: [
+                        "① HTTP는 압축을 지원하지만 HTTPS는 지원하지 않는다.",
+                        "② HTTPS는 SSL/TLS를 사용해 보안 연결을 제공한다.",
+                        "③ HTTP는 전송 속도가 느리다.",
+                        "④ HTTPS는 파일 전송 전용 프로토콜이다.",
+                    ],
+                    answer: "2",
+                    explanation:
+                        "HTTPS는 HTTP에 SSL/TLS 보안 계층을 추가하여 데이터 전송의 보안을 강화합니다.",
+                },
+                {
+                    question:
+                        "12. 패킷 스위칭(Packet Switching)의 특징으로 옳은 것은?",
+                    options: [
+                        "① 모든 데이터가 하나의 경로를 통해 전송된다.",
+                        "② 데이터가 작은 패킷으로 분할되어 독립적으로 전송된다.",
+                        "③ 패킷 스위칭은 회선 전용 연결을 필요로 한다.",
+                        "④ 패킷 스위칭은 실시간 데이터 전송에 부적합하다.",
+                    ],
+                    answer: "2",
+                    explanation:
+                        "패킷 스위칭은 데이터를 작은 패킷으로 분할한 후 각각 독립적으로 경로를 선택해 전송함으로써 네트워크 효율성을 높입니다.",
+                },
+                {
+                    question:
+                        "13. 라우팅 프로토콜 중 내부 게이트웨이 프로토콜(IGP)에 해당하는 것은?",
+                    options: ["① BGP", "② OSPF", "③ EGP", "④ RIPng"],
+                    answer: "2",
+                    explanation:
+                        "OSPF는 내부 게이트웨이 프로토콜(IGP)에 속하며, 같은 자치 시스템 내에서 라우팅 정보를 교환합니다.",
+                },
+                {
+                    question: "14. 라우터의 주요 기능은 무엇인가?",
+                    options: [
+                        "① 데이터 암호화",
+                        "② 패킷 전달 및 경로 선택",
+                        "③ 오류 검출 및 수정",
+                        "④ 데이터를 압축하여 전송",
+                    ],
+                    answer: "2",
+                    explanation:
+                        "라우터는 서로 다른 네트워크 간에 패킷을 전달하고, 최적의 경로를 선택하는 역할을 수행합니다.",
+                },
+                {
+                    question:
+                        "15. VLAN(Virtual LAN)이 제공하는 주요 이점은 무엇인가?",
+                    options: [
+                        "① 물리적 위치에 구애받지 않는 네트워크 분할",
+                        "② 더 높은 데이터 전송 속도",
+                        "③ 보안을 위해 모든 트래픽을 암호화",
+                        "④ 라우터 없이도 WAN 연결이 가능하다",
+                    ],
+                    answer: "1",
+                    explanation:
+                        "VLAN은 물리적 위치와 무관하게 네트워크를 논리적으로 분할하여 관리할 수 있도록 도와줍니다.",
+                },
+                {
+                    question:
+                        "16. SDN(Software Defined Networking)의 핵심 개념은 무엇인가?",
+                    options: [
+                        "① 하드웨어 기반 패킷 포워딩",
+                        "② 네트워크 제어와 데이터 전달 분리",
+                        "③ 고정된 네트워크 구성",
+                        "④ 전용 하드웨어 스위치 사용",
+                    ],
+                    answer: "2",
+                    explanation:
+                        "SDN은 네트워크 제어 기능을 데이터 평면과 분리하여 중앙집중식 소프트웨어로 관리하는 기술입니다.",
+                },
+                {
+                    question:
+                        "17. 무선 네트워크에서 사용되는 IEEE 802.11 표준의 주요 목적은?",
+                    options: [
+                        "① 유선 LAN 구축",
+                        "② 무선 통신의 표준화 및 관리",
+                        "③ 장거리 무선 통신",
+                        "④ 데이터 저장 장치 연결",
+                    ],
+                    answer: "2",
+                    explanation:
+                        "IEEE 802.11 표준은 무선 LAN(WLAN) 구축을 위한 통신 규칙을 정의합니다.",
+                },
+                {
+                    question:
+                        "18. VPN(Virtual Private Network)의 주요 기능은 무엇인가?",
+                    options: [
+                        "① 인터넷 속도 향상",
+                        "② 안전한 원격 접속과 데이터 암호화",
+                        "③ IP 주소 변환",
+                        "④ 네트워크 하드웨어 관리",
+                    ],
+                    answer: "2",
+                    explanation:
+                        "VPN은 원격지에서 사설 네트워크에 안전하게 접속할 수 있도록 데이터 암호화와 터널링 기능을 제공합니다.",
+                },
+                {
+                    question:
+                        "19. 대역폭(Bandwidth)에 관한 설명으로 옳은 것은?",
+                    options: [
+                        "① 대역폭은 단위 시간당 전송되는 데이터 양을 의미한다.",
+                        "② 대역폭은 네트워크 보안 수준을 나타낸다.",
+                        "③ 대역폭은 라우터의 처리 속도만을 의미한다.",
+                        "④ 대역폭은 저장 용량과 동일하다.",
+                    ],
+                    answer: "1",
+                    explanation:
+                        "대역폭은 네트워크에서 단위 시간당 전송 가능한 데이터의 양을 나타내는 지표입니다.",
+                },
+                {
+                    question: "20. QoS(Quality of Service)의 목적은 무엇인가?",
+                    options: [
+                        "① 모든 데이터 패킷을 동일하게 취급한다.",
+                        "② 특정 트래픽에 우선순위를 부여해 서비스 품질을 보장한다.",
+                        "③ 데이터 압축률을 높인다.",
+                        "④ 네트워크 연결 상태를 실시간으로 모니터링한다.",
+                    ],
+                    answer: "2",
+                    explanation:
+                        "QoS는 네트워크에서 중요 트래픽에 대해 우선순위를 부여하여, 안정적인 서비스 품질을 유지할 수 있게 합니다.",
+                },
+            ];
+
+            // 페이지 로드 시 문제 자동 렌더링
+            window.onload = function () {
+                renderQuiz();
+            };
+
+            // 문제 렌더링 함수
+            function renderQuiz() {
+                const quizDiv = document.getElementById("quizQuestions");
+                let html = "";
+                quizData.forEach((item, index) => {
+                    const qNum = index + 1;
+                    html += `
+          <div class="mb-3">
+            <p class="fw-semibold">${qNum}. ${item.question}</p>
+            <div class="ms-3">
+              ${item.options
+                  .map(
+                      (opt, i) => `
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="q${qNum}" id="q${qNum}_${
+                          i + 1
+                      }" value="${i + 1}">
+                    <label class="form-check-label" for="q${qNum}_${
+                          i + 1
+                      }">${opt}</label>
+                  </div>
+                `
+                  )
+                  .join("")}
+            </div>
+          </div>
+        `;
+                });
+                quizDiv.innerHTML = html;
+            }
+
+            // 채점 및 해설 출력 함수
+            function checkAnswers() {
+                const submitButton = document.getElementById("submitButton");
+                if (submitButton.disabled) return;
+                submitButton.disabled = true;
+
+                const userName = document
+                    .getElementById("userName")
+                    .value.trim();
+                if (userName === "") {
+                    alert("이름을 입력하세요!");
+                    submitButton.disabled = false;
+                    return;
+                }
+
+                let correctCount = 0;
+                let explanationHTML = `<h3>${userName}님, 틀린 문제 해설</h3><ul class="ps-3">`;
+                let explanationMD = `## ${userName}님, 틀린 문제 해설\n\n`;
+                let resultTable = `
+        <table class="table table-bordered">
+          <thead class="table-light">
+            <tr>
+              <th>문제 번호</th>
+              <th>제출한 답</th>
+              <th>정답</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+                quizData.forEach((item, index) => {
+                    const qNum = index + 1;
+                    const userAnswerElem = document.querySelector(
+                        `input[name="q${qNum}"]:checked`
+                    );
+                    const userAnswer = userAnswerElem
+                        ? userAnswerElem.value
+                        : "미선택";
+                    const correctAnswer = item.answer;
+                    const rowClass =
+                        userAnswer === correctAnswer ? "correct" : "incorrect";
+                    if (userAnswer === correctAnswer) {
+                        correctCount++;
+                    } else {
+                        explanationHTML += `<li><strong>문제 ${qNum}:</strong> ${item.explanation}</li>`;
+                        explanationMD += `- **문제 ${qNum}**: ${item.explanation}\n\n`;
+                    }
+                    resultTable += `
+          <tr class="${rowClass}">
+            <td>${qNum}</td>
+            <td>${userAnswer}</td>
+            <td>${correctAnswer}</td>
+          </tr>
+        `;
+                });
+                resultTable += `</tbody></table>`;
+                document.getElementById("result").innerHTML = resultTable;
+
+                const now = new Date();
+                document.getElementById(
+                    "submissionTime"
+                ).innerHTML = `<h5>제출 시간: ${now.toLocaleTimeString()}</h5>`;
+                document.getElementById(
+                    "score"
+                ).innerHTML = `<h4>${userName}님, 점수: ${correctCount} / ${quizData.length}</h4>`;
+
+                explanationHTML += "</ul>";
+                if (correctCount < quizData.length) {
+                    document.getElementById("explanation").innerHTML =
+                        explanationHTML;
+                    const downloadBtn = document.getElementById(
+                        "downloadExplanation"
+                    );
+                    downloadBtn.style.display = "inline-block";
+                    downloadBtn.setAttribute("data-explanation", explanationMD);
+                } else {
+                    document.getElementById("explanation").innerHTML =
+                        "<h5>모든 문제를 맞추셨습니다! 🎉</h5>";
+                }
+            }
+
+            // 해설 다운로드 (Markdown 파일) 함수
+            function downloadExplanation() {
+                const explanationContent = document
+                    .getElementById("downloadExplanation")
+                    .getAttribute("data-explanation");
+                const blob = new Blob([explanationContent], {
+                    type: "text/markdown",
+                });
+                const link = document.createElement("a");
+                link.href = URL.createObjectURL(blob);
+                link.download = "네트워크_개념_퀴즈_해설.md";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        </script>
+    </body>
+</html>
