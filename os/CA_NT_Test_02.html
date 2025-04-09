@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>네트워크 개념 퀴즈 (20문제)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <div class="container my-5">
+    <!-- 퀴즈 카드 -->
+    <div class="card mx-auto" style="max-width: 800px">
+      <div class="card-body">
+        <h1 class="card-title quiz-header mb-4">
+          네트워크 개념 퀴즈 (총 20문제)
+        </h1>
+
+        <!-- 이름 입력 -->
+        <div class="mb-3">
+          <label for="userName" class="form-label fw-semibold">이름 입력:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="userName"
+            placeholder="이름을 입력하세요"
+            required
+          />
+        </div>
+
+        <!-- 문제 영역 -->
+        <form id="quizForm">
+          <div id="quizQuestions"><!-- 문제 목록이 동적으로 삽입됩니다 --></div>
+          <button
+            type="button"
+            class="btn btn-success mt-3"
+            id="submitButton"
+            onclick="checkAnswers()"
+          >
+            제출하기
+          </button>
+        </form>
+
+        <!-- 결과 영역 -->
+        <div id="result" class="mt-4"></div>
+        <div id="submissionTime" class="mt-2"></div>
+        <div id="score" class="mt-2"></div>
+        <div id="explanation" class="mt-4"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  ></script>
+
+  <!-- 퀴즈 데이터 및 스크립트 -->
+  <script>
+    // 총 20문제 데이터
+    // answer 값은 "A", "B", "C", "D" 형태
+    // explanation은 각 문제의 정답 간단 설명
+
+    const quizData = [
+      {
+        question: "1. 네트워크 주소의 클래스를 나타내는 데 사용되는 IP 버전은 무엇입니까?",
+        options: ["(A) IPv4", "(B) IPv6", "(C) ARP", "(D) MAC"],
+        answer: "A",
+        explanation: "IPv4는 네트워크 클래스를 정의하는 데 사용됩니다(A, B, C 등)."
+      },
+      {
+        question: "2. IPv6 주소의 길이는 몇 비트입니까?",
+        options: ["(A) 32 비트", "(B) 64 비트", "(C) 128 비트", "(D) 256 비트"],
+        answer: "C",
+        explanation: "IPv6 주소는 총 128비트로 구성됩니다."
+      },
+      {
+        question: "3. 다음 중 IP 주소가 할당되지 않은 상태에서 사용되는 주소 유형은 무엇입니까?",
+        options: ["(A) 공인 IP 주소", "(B) 사설 IP 주소", "(C) 고정 IP 주소", "(D) APIPA"],
+        answer: "D",
+        explanation: "APIPA는 DHCP 서버가 주소를 할당하지 못할 때 자동으로 할당되는 IP입니다."
+      },
+      {
+        question: "4. ARP 프로토콜이 사용하는 주소 유형은 무엇입니까?",
+        options: ["(A) 전자 메일 주소", "(B) MAC 주소", "(C) 포트 번호", "(D) IPv4 주소"],
+        answer: "B",
+        explanation: "ARP는 IP를 MAC 주소로 변환(또는 역으로 확인)하기 위한 프로토콜입니다."
+      },
+      {
+        question: "5. IPv4와 IPv6을 구별하는 특징 중 하나는 IPv6의 헤더가 상대적으로 ________ 하다는 것입니다.",
+        options: [
+          "(A) 길고 복잡한",
+          "(B) 단순하고 작은",
+          "(C) 길고 단순한",
+          "(D) 짧고 복잡한"
+        ],
+        answer: "B",
+        explanation: "IPv6는 IPv4 대비 헤더 구조가 간단해 처리 효율을 높였습니다."
+      },
+      {
+        question: "6. NAT 기술은 외부 네트워크와의 통신에서 내부 네트워크의 IP 주소를 어떻게 처리합니까?",
+        options: ["(A) 공개", "(B) 변경", "(C) 숨김", "(D) 삭제"],
+        answer: "B",
+        explanation: "NAT는 사설 IP를 외부 통신 시 공인 IP로 변환(‘변경’)하여 사용합니다."
+      },
+      {
+        question: "7. IP 주소를 자동으로 할당하는 프로토콜은 무엇입니까?",
+        options: ["(A) DNS", "(B) DHCP", "(C) SMTP", "(D) FTP"],
+        answer: "B",
+        explanation: "DHCP는 클라이언트에게 IP 주소를 동적으로 할당하는 프로토콜입니다."
+      },
+      {
+        question: "8. 라우팅 프로토콜 중 인터넷 규모에서 사용되는 것은 무엇입니까?",
+        options: ["(A) RIP", "(B) OSPF", "(C) EGP", "(D) IGRP"],
+        answer: "C",
+        explanation: "EGP(Exterior Gateway Protocol)는 자율 시스템 간 라우팅에 주로 사용됩니다."
+      },
+      {
+        question: "9. IP 충돌을 방지하기 위해 네트워크 장치가 사용하는 프로토콜은 무엇입니까?",
+        options: ["(A) ARP", "(B) ICMP", "(C) SSH", "(D) UDP"],
+        answer: "A",
+        explanation: "ARP를 통해 IP 사용 여부를 확인함으로써 IP 충돌을 감지/방지할 수 있습니다."
+      },
+      {
+        question: "10. 다음 중 MAC 주소를 사용하는 프로토콜은 무엇입니까?",
+        options: ["(A) TCP", "(B) ARP", "(C) UDP", "(D) ICMP"],
+        answer: "B",
+        explanation: "ARP는 IP를 MAC으로 매핑하는 기능을 수행하므로 MAC 주소를 활용합니다."
+      },
+      {
+        question: "11. 네트워크 장치에서 발생하는 IP 충돌을 해결하기 위해 사용되는 프로토콜은 무엇입니까?",
+        options: ["(A) ICMP", "(B) ARP", "(C) UDP", "(D) TCP"],
+        answer: "B",
+        explanation: "IP 충돌이 발생하면 ARP를 통해 MAC~IP 매핑을 확인하여 중복을 파악합니다."
+      },
+      {
+        question: "12. 다음 중 NAT의 기능은 무엇입니까?",
+        options: ["(A) IP 주소 변환", "(B) 패킷 필터링", "(C) 라우팅 정보 배포", "(D) 트래픽 모니터링"],
+        answer: "A",
+        explanation: "NAT(Network Address Translation)은 내부 사설 IP와 공인 IP를 변환합니다."
+      },
+      {
+        question: "13. IP 주소와 함께 네트워크 상에서 기기를 식별하는 데 사용되는 주소는 무엇입니까?",
+        options: ["(A) 포트 주소", "(B) MAC 주소", "(C) DNS 이름", "(D) 세션 ID"],
+        answer: "B",
+        explanation: "네트워크 상에서 호스트는 일반적으로 IP + MAC 주소를 통해 식별됩니다."
+      },
+      {
+        question: "14. TCP 통신에서 연결 상태가 'LISTEN'인 것은 무엇을 의미합니까?",
+        options: ["(A) 연결을 종료 중", "(B) 데이터 전송 중", "(C) 연결 요청을 기다리는 중", "(D) 연결이 완료된 상태"],
+        answer: "C",
+        explanation: "‘LISTEN’은 서버가 클라이언트로부터의 연결 요청을 대기 중임을 의미합니다."
+      },
+      {
+        question: "15. MSS 값이 TCP/IP 네트워크에서 어떤 역할을 합니까?",
+        options: [
+          "(A) 최대 세그먼트 크기 설정",
+          "(B) 최소 세그먼트 크기 설정",
+          "(C) 데이터 패킷의 속도 조절",
+          "(D) 연결의 우선순위 결정"
+        ],
+        answer: "A",
+        explanation: "MSS(Maximum Segment Size)는 TCP 세그먼트의 최대 전송 크기를 결정합니다."
+      },
+      {
+        question: "16. 다음 중 TCP 3-way 핸드셰이크 과정에 필요한 플래그는 무엇입니까?",
+        options: [
+          "(A) URG, PSH, RST",
+          "(B) SYN, ACK, FIN",
+          "(C) ACK, RST, SYN",
+          "(D) FIN, PSH, URG"
+        ],
+        answer: "B",
+        explanation: "TCP 3-way handshake는 SYN → SYN+ACK → ACK 순서로 진행되며, FIN은 종료 시점입니다."
+      },
+      {
+        question: "17. TCP에서 패킷 손실에 대응하는 ARQ 기법 중 하나는 무엇입니까?",
+        options: [
+          "(A) Selective Repeat",
+          "(B) Stop-and-Wait",
+          "(C) Go-Back-N",
+          "(D) 모든 답변이 맞음"
+        ],
+        answer: "A",
+        explanation: "TCP는 Selective Acknowledgment 기능으로 손실된 구간만 재전송하는 Selective Repeat를 지원합니다."
+      },
+      {
+        question: "18. UDP 프로토콜의 특징 중 하나는 무엇입니까?",
+        options: [
+          "(A) 연결 지향적",
+          "(B) 신뢰성 있는 데이터 전송",
+          "(C) 비연결 지향적",
+          "(D) 전송 순서 보장"
+        ],
+        answer: "C",
+        explanation: "UDP는 연결을 설정하지 않고 데이터를 전송하는 비연결형 프로토콜입니다."
+      },
+      {
+        question: "19. NAT 기술을 사용할 때, 외부 네트워크로부터의 접근을 위해 사용하는 IP 주소 유형은 무엇입니까?",
+        options: ["(A) 공인 IP 주소", "(B) 사설 IP 주소", "(C) 정적 IP 주소", "(D) 동적 IP 주소"],
+        answer: "A",
+        explanation: "NAT 사용 시 외부와 통신하기 위해서는 공인 IP 주소를 사용해야 합니다."
+      },
+      {
+        question: "20. 네트워크에서 '플러딩'이 일어날 때 사용되는 프로토콜은 무엇입니까?",
+        options: ["(A) ICMP", "(B) ARP", "(C) UDP", "(D) TCP"],
+        answer: "B",
+        explanation: "ARP는 같은 브로드캐스트 도메인 전체에 패킷을 전송(플러딩)하여 MAC 주소를 구합니다."
+      }
+    ];
+
+    // 페이지 로드 시 문제 자동 렌더링
+    window.onload = function () {
+      renderQuiz();
+    };
+
+    // 문제 렌더링 함수
+    function renderQuiz() {
+      const quizDiv = document.getElementById("quizQuestions");
+      let html = "";
+
+      quizData.forEach((item, index) => {
+        const qNum = index + 1;
+        html += `
+          <div class="mb-3">
+            <p class="fw-semibold">${qNum}. ${item.question}</p>
+            <div class="ms-3">
+              ${item.options
+                .map((option, i) => {
+                  // 옵션 예) (A) IPv4 => option[1] = A
+                  // 실제 선택값은 괄호 안의 알파벳으로 처리
+                  const optionValue = option.match(/\((.)\)/); // 정규식으로 (A), (B) 등 추출
+                  const extractedValue = optionValue ? optionValue[1] : "";
+                  return `
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="q${qNum}" id="q${qNum}_${i + 1}" value="${extractedValue}">
+                      <label class="form-check-label" for="q${qNum}_${i + 1}">${option}</label>
+                    </div>
+                  `;
+                })
+                .join("")}
+            </div>
+          </div>
+        `;
+      });
+
+      quizDiv.innerHTML = html;
+    }
+
+    // 채점 함수
+    function checkAnswers() {
+      const userName = document.getElementById("userName").value.trim();
+      if (!userName) {
+        alert("이름을 입력하세요!");
+        return;
+      }
+
+      let correctCount = 0;
+      let wrongListHTML = `<ul class="ps-4">`;
+
+      quizData.forEach((item, index) => {
+        const qNum = index + 1;
+        const selected = document.querySelector(`input[name="q${qNum}"]:checked`);
+        const userAnswer = selected ? selected.value : null;
+
+        if (userAnswer === item.answer) {
+          correctCount++;
+        } else {
+          // 틀린 경우만 해설에 추가
+          wrongListHTML += `
+            <li><strong>문제 ${qNum}:</strong> 정답은 (${item.answer}) <br/>
+            해설: ${item.explanation}</li>
+          `;
+        }
+      });
+
+      wrongListHTML += `</ul>`;
+
+      // 제출 시간
+      const now = new Date();
+      const timeString = now.toLocaleString("ko-KR", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+      });
+      document.getElementById("submissionTime").innerHTML =
+        `<h5>제출 시간: ${timeString}</h5>`;
+
+      // 점수 표시
+      const scoreEl = document.getElementById("score");
+      scoreEl.innerHTML = `<h4>${userName}님, 점수: ${correctCount} / ${quizData.length}</h4>`;
+
+      // 결과 요약
+      const resultEl = document.getElementById("result");
+      if (correctCount === quizData.length) {
+        resultEl.innerHTML = `<h5>모든 문제를 맞추셨습니다! 🎉</h5>`;
+        document.getElementById("explanation").innerHTML = "";
+      } else {
+        resultEl.innerHTML = `<h5>틀린 문제가 있습니다.</h5>`;
+        document.getElementById("explanation").innerHTML = `
+          <h5>틀린 문제 해설</h5>
+          ${wrongListHTML}
+        `;
+      }
+    }
+  </script>
+</body>
+</html>
